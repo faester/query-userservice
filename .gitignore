@@ -1,0 +1,6 @@
+# Don't include authorization secrets!
+authorization
+
+# vim stuff
+*~
+*.swp
