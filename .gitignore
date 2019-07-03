@@ -1,6 +1,10 @@
 # Don't include authorization secrets!
 authorization
+secrets.json
 
 # vim stuff
 *~
 *.swp
+
+# Default output file name
+user-query-result.txt
