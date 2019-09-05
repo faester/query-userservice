@@ -8,5 +8,6 @@ function Get-User([string]$AccessToken, [string]$userid) {
 
 $accessToken = Get-AccessToken -ClientID $credentials.clientId -ClientSecret $credentials.clientSecret
 foreach($userid in $input) {
+	write-host "Retrieving" $userid
 	Get-User -AccessToken $accessToken -userid $userid 
 }

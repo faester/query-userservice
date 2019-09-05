@@ -8,3 +8,4 @@ secrets.json
 
 # Default output file name
 user-query-result.txt
+.current-token

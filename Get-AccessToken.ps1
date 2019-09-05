@@ -1,4 +1,16 @@
 function Get-AccessToken {
+	try {
+		$fromFile = $(Import-CliXml -Path .current-token)
+		if (($fromFile -NE $null) -and ($fromFile.expiration -GT (get-date))) {
+			write-host "Using cached token"
+			return $fromFile.token
+		}
+	}
+	catch {
+		Write-Host "No token cache file found."
+	}
+
+
 	$credentials = $(Get-Content -Path .\secrets.json|ConvertFrom-Json)
 	$ClientID = $credentials.clientId 
 	$ClientSecret =  $credentials.clientSecret
@@ -20,5 +32,10 @@ function Get-AccessToken {
 		exit 1
 	}
 
-	return $($response |ConvertFrom-Json).access_token
+	$parsed = $($response |ConvertFrom-Json)
+
+	$cacheable = @{token = $parsed.access_token; expiration = (Get-Date).AddSeconds($parsed.expires_in * 0.8) }
+	$cacheable |Export-CliXml -Path .current-token -Encoding UTF8
+
+	return $parsed.access_token
 }

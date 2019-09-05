@@ -28,6 +28,4 @@ function Query-Userservice {
 
 
 $accessToken = Get-AccessToken -ClientID $credentials.clientId -ClientSecret $credentials.clientSecret
-Write-Host "Received access token" $accessToken
-
 Query-Userservice -AccessToken $accessToken -queryExpression $queryExpression 

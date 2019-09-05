@@ -40,3 +40,15 @@ The script is called query-userservice.ps
 ```
 .\query-userservice.ps1
 ```
+
+## Examples 
+
+Show birtdate and username for all users matching a query: 
+```
+ .\Query-UserService.ps1 -queryExpression "Username == ""faester@gmail.com""" |.\Get-User.ps1 |select -ExpandProperty Properties |select -Property Birthdate,Username
+```
+
+Set Gender to null for all users with gender greater than 1.
+```
+ .\Query-UserService.ps1 -queryExpression "Gender > 1" |.\Get-User.ps1 |.\Update-User.ps1 -properties @{Gender=$null}
+```
