@@ -7,7 +7,16 @@ function Get-User([string]$AccessToken, [string]$userid) {
 }
 
 $accessToken = Get-AccessToken -ClientID $credentials.clientId -ClientSecret $credentials.clientSecret
+
+$userids = @()
 foreach($userid in $input) {
-	write-host "Retrieving" $userid
+	$userids += $userid
+}
+
+$count = 0
+foreach($userid in $userids) {
+	$count++
+	$stopwatch =  [system.diagnostics.stopwatch]::StartNew()
 	Get-User -AccessToken $accessToken -userid $userid 
+	write-host "Retrieving" $userid "which is" $count "of" $userids.Length "in" $stopwatch.Elapsed
 }
