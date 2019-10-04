@@ -1,6 +1,7 @@
 # Don't include authorization secrets!
 authorization
 secrets.json
+secrets.*.json
 
 # vim stuff
 *~

@@ -1,8 +1,10 @@
+param ([string]$userserviceEndpoint)
+
 . .\Get-AccessToken.ps1
 
 function Get-User([string]$AccessToken, [string]$userid) {
 	$headers = @{ "Authorization" = ("Bearer " + $AccessToken); "Content-Type" = "application/json+jsondate"}
-	$response = Invoke-Webrequest -Uri ("https://userservice.jppol.dk/ssouser.svc/user/" + $userid) -Method GET -Headers $headers
+	$response = Invoke-Webrequest -Uri ($userserviceEndpoint + "/ssouser.svc/user/" + $userid) -Method GET -Headers $headers
 	$response|ConvertFrom-Json
 }
 

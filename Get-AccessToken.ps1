@@ -18,7 +18,7 @@ function Get-AccessToken {
 	$encodedCreds = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($pair))
 
 	try {
-		$response = Invoke-Webrequest -Uri https://auth.medielogin.dk/connect/token -Method POST -Body "grant_type=client_credentials&scope=userservice" -Headers @{ "Authorization" = "Basic " + $encodedCreds }
+		$response = Invoke-Webrequest -Uri ($credentials.authEndpoint + "/connect/token") -Method POST -Body "grant_type=client_credentials&scope=userservice" -Headers @{ "Authorization" = "Basic " + $encodedCreds }
 	}
 	catch {
 		$errorRecord = $_

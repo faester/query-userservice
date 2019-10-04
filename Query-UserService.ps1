@@ -1,10 +1,10 @@
-param([string]$queryExpression = "advertizingOptOut==1", [string]$filePath = "user-query-result.txt")
+param([string]$queryExpression = "advertizingOptOut==1", [string]$filePath = "user-query-result.txt", [string]$userserviceEndpoint = "https://userservicetest.jppol.dk")
 
 . .\Get-AccessToken.ps1
 
 function Update-User([string]$AccessToken, [string]$userid, [object]$properties) {
 	$headers = @{ "Authorization" = ("Bearer " + $AccessToken); "Content-Type" = "application/json+jsondate"}
-	$user = Invoke-Webrequest -Uri ("https://userservice.jppol.dk/ssouser.svc/user/" + $userid) -Method GET
+	$user = Invoke-Webrequest -Uri ($userserviceEndpoint + "/ssouser.svc/user/" + $userid) -Method GET
 	return $user
 }
 
@@ -16,7 +16,7 @@ function Query-Userservice {
 	$headers = @{ "Authorization" = ("Bearer " + $AccessToken); "Content-Type" = "application/json"}
 
 	for($currentPage = 0; $currentPage -lt $maxPage; $currentPage++) {
-		$uri = "https://userservice.jppol.dk/ssouser.svc/query/?page=" + $currentPage
+		$uri = $userserviceEndpoint + "/ssouser.svc/query/?page=" + $currentPage
 		$requestResult = Invoke-Webrequest -Uri $uri -Headers $headers -Body $queryExpressionJson -Method PUT
 		$content = [System.Text.Encoding]::Utf8.GetString($requestResult.Content)
 		$queryResult  = $($content | ConvertFrom-Json)
