@@ -45,10 +45,15 @@ The script is called query-userservice.ps
 
 Show birtdate and username for all users matching a query: 
 ```
- .\Query-UserService.ps1 -queryExpression "Username == ""faester@gmail.com""" |.\Get-User.ps1 |select -ExpandProperty Properties |select -Property Birthdate,Username
+ .\Query-UserService.ps1 -queryExpression "Username == ""faester@gmail.com""" -userserviceEndpoint "https://userservicetest.jppol.dk" |.\Get-User.ps1 -userserviceEndpoint "https://userservicetest.jppol.dk" |select -ExpandProperty Properties |select -Property Birthdate,Username
 ```
 
 Set Gender to null for all users with gender greater than 1.
 ```
  .\Query-UserService.ps1 -queryExpression "Gender > 1" |.\Get-User.ps1 |.\Update-User.ps1 -properties @{Gender=$null}
+```
+
+Block mails
+```
+ .\Query-UserService.ps1 -queryExpression "created() < 2016/06/01 && MailIsBlocked != 1 && usernameDomain() != ""example.com"""|.\Get-User.ps1 -userserviceEndpoint "https://userservicetest.jppol.dk"|.\Update-User.ps1 -properties @{"MailIsBlocked" = 1} -userserviceEndpoint "https://userservicetest.jppol.dk/"
 ```

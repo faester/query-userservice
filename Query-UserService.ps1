@@ -1,4 +1,4 @@
-param([string]$queryExpression = "advertizingOptOut==1", [string]$filePath = "user-query-result.txt", [string]$userserviceEndpoint = "https://userservicetest.jppol.dk")
+param([string]$queryExpression = "advertizingOptOut==1", [string]$filePath = "user-query-result.txt", [string]$userserviceEndpoint = "https://userservicetest.jppol.dk", [int]$maxPages = 0)
 
 . .\Get-AccessToken.ps1
 
@@ -22,7 +22,10 @@ function Query-Userservice {
 		$queryResult  = $($content | ConvertFrom-Json)
 		$queryResult.IdsOfMatchingUsers 
 		$maxPage = $queryResult.NumberOfPages
-		Write-Host "Page", ($currentPage + 1), "of", $maxPage
+		if ($maxPages -GT 0) {
+			$maxPage = $maxPages
+		}
+		Write-Host "Page", ($currentPage + 1), "of", $queryResult.NumberOfPages
 	}
 }
 
