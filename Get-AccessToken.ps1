@@ -21,9 +21,11 @@ function Get-AccessToken {
 		$response = Invoke-Webrequest -Uri ($credentials.authEndpoint + "/connect/token") -Method POST -Body "grant_type=client_credentials&scope=userservice" -Headers @{ "Authorization" = "Basic " + $encodedCreds }
 	}
 	catch {
+		Write-Host "There was an error getting an access token @ " $credentials.authEndpoint
 		$errorRecord = $_
 		Write-Host $errorRecord.Exception
 		Write-Host $errorRecord.ErrorDetails 
+		return 1
 	}
 
 	if ($response.StatusCode -NE 200) {
