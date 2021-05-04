@@ -57,3 +57,8 @@ Block mails
 ```
  .\Query-UserService.ps1 -queryExpression "created() < 2016/06/01 && MailIsBlocked != 1 && usernameDomain() != ""example.com"""|.\Get-User.ps1 -userserviceEndpoint "https://userservicetest.jppol.dk"|.\Update-User.ps1 -properties @{"MailIsBlocked" = 1} -userserviceEndpoint "https://userservicetest.jppol.dk/"
 ```
+
+### Validate emails 
+```
+gc C:\temp\email-validation\subset.csv |.\validate-email.ps1
+```
