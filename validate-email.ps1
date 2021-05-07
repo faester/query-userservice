@@ -11,11 +11,11 @@ function Verify-Email([string]$AccessToken, [string]$email) {
 	$response|ConvertFrom-Json
 }
 
-$accessToken = Get-AccessToken -ClientID $credentials.clientId -ClientSecret $credentials.clientSecret
 
 Write-Host "Building list"
 $count = 0
 foreach($email in $input) {
+	$accessToken = Get-AccessToken -ClientID $credentials.clientId -ClientSecret $credentials.clientSecret
 	$count++
 	$stopwatch =  [system.diagnostics.stopwatch]::StartNew()
 	Verify-Email -AccessToken $accessToken -email $email
