@@ -62,3 +62,8 @@ Block mails
 ```
 gc C:\temp\email-validation\subset.csv |.\validate-email.ps1
 ```
+
+## Read csv and update users 
+```
+gc .\validatedYouth.csv -TotalCount 2 |ConvertFrom-Csv -Delimiter `t|foreach{ new-object -typename psobject  -property @{ "Properties" = @{ "ValidatedYouth" = ($_.ValidatedYouth  | get-date ).ToString("O")}; "Identifier"=$_.Identifier } }  |.\Update-User-From-Input.ps1 -userserviceEndpoint https://userservice.jppol.dk
+```

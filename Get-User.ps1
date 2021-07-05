@@ -20,5 +20,5 @@ foreach($userid in $userids) {
 	$count++
 	$stopwatch =  [system.diagnostics.stopwatch]::StartNew()
 	Get-User -AccessToken $accessToken -userid $userid 
-	write-host "Retrieving" $userid "which is" $count "of" $userids.Length "in" $stopwatch.Elapsed
+	write-host "Retrieved" $userid "which is" $count "of" $userids.Length "in" $stopwatch.Elapsed
 }
