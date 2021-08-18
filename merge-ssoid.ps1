@@ -12,6 +12,8 @@ gc $ssoIdFile |ConvertFrom-CSV -Delimiter ";" | foreach {
 		Write-Host "Read $count ids"
 	}
 }
+
+# Dette er en test...
 Write-Host "Reading resultfile"
 gc $resultfile |ConvertFrom-CSV|foreach  {
 	$count = $count + 1
